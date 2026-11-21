@@ -1,3 +1,4 @@
+
 name: Build Sumi Android
 
 on:
@@ -22,9 +23,8 @@ jobs:
 
       - name: Configurar Android SDK
         uses: android-actions/setup-android@v3
-
-      - name: Aceitar licenças
-        run: yes | sdkmanager --licenses || true
+        with:
+          packages: ''
 
       - name: Instalar ferramentas Android
         run: |
@@ -47,3 +47,4 @@ jobs:
         with:
           name: Sumi-Android-APK
           path: src/android/app/build/outputs/apk/mainline/release/*.apk
+
