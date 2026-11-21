@@ -1,10 +1,12 @@
 name: Build Sumi Android
+
 on:
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-24.04
+
     steps:
       - name: Baixar código
         uses: actions/checkout@v4
@@ -21,8 +23,17 @@ jobs:
       - name: Configurar Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Aceitar licenças
+        run: yes | sdkmanager --licenses || true
+
       - name: Instalar ferramentas Android
-        run: sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0" "ndk;29.0.13113456" "cmake;3.31.6"
+        run: |
+          sdkmanager --install \
+            "platform-tools" \
+            "platforms;android-35" \
+            "build-tools;35.0.0" \
+            "ndk;29.0.13113456" \
+            "cmake;3.31.6"
 
       - name: Preparar Gradle
         run: chmod +x src/android/gradlew
