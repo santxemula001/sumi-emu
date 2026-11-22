@@ -61,6 +61,13 @@ SPDX-License-Identifier: GPL-3.0-or-later
             </intent-filter>
         </activity>
 
+        <!-- CUPHEAD Interface -->
+        <activity
+            android:name="com.santx.cuphead.CupheadActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.Sumi.Main"
+            android:exported="false" />
+
         <!-- Settings Activity -->
         <activity
             android:name="org.sumi.sumi_emu.features.settings.ui.SettingsActivity"

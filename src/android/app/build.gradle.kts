@@ -55,7 +55,7 @@ android {
 
     defaultConfig {
         // TODO If this is ever modified, change application_id in strings.xml
-        applicationId = "com.sumi.SumiEmulator"
+        applicationId = "com.santx.cuphead"
         minSdk = 30
         //noinspection EditedTargetSdkVersion
         targetSdk = 35

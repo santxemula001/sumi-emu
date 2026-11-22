@@ -183,6 +183,7 @@ class MainActivity : AppCompatActivity(), ThemeProvider {
         navController.navigate(R.id.action_firstTimeSetupFragment_to_gamesFragment)
         (binding.navigationView as NavigationBarView).setupWithNavController(navController)
         showNavigation(visible = true, animated = true)
+        startActivity(android.content.Intent(this, com.santx.cuphead.CupheadActivity::class.java))
     }
 
     private fun setUpNavigation(navController: NavController) {
@@ -194,6 +195,7 @@ class MainActivity : AppCompatActivity(), ThemeProvider {
             homeViewModel.navigatedToSetup = true
         } else {
             (binding.navigationView as NavigationBarView).setupWithNavController(navController)
+            startActivity(android.content.Intent(this, com.santx.cuphead.CupheadActivity::class.java))
         }
     }
 
