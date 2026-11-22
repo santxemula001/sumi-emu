@@ -154,7 +154,7 @@ public class CupheadActivity extends AppCompatActivity {
                             false
                         );
 
-                    org.sumi.sumi_emu.activities.EmulationActivity.launch(this, game);
+                    org.sumi.sumi_emu.activities.EmulationActivity.Companion.launch(this, game);
                 });
             }, "Cuphead-NSP-Copy").start();
         });
