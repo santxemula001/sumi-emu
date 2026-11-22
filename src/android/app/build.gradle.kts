@@ -105,7 +105,7 @@ android {
                 signingConfigs.getByName("default")
             }
 
-            resValue("string", "app_name_suffixed", "Sumi")
+            resValue("string", "app_name_suffixed", "CUPHEAD")
             isDefault = true
             isMinifyEnabled = true
             isShrinkResources = true

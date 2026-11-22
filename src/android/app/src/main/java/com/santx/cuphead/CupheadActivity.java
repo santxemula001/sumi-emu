@@ -101,18 +101,62 @@ public class CupheadActivity extends AppCompatActivity {
         play.setOnClickListener(v -> {
             if (selectedUri == null) {
                 Toast.makeText(this, "Importe o arquivo NSP do Cuphead primeiro.", Toast.LENGTH_SHORT).show();
-            } else {
-                org.sumi.sumi_emu.model.Game game =
-                    new org.sumi.sumi_emu.model.Game(
-                        "Cuphead",
-                        selectedUri.toString(),
-                        "0",
-                        "",
-                        "",
-                        false
-                    );
-                org.sumi.sumi_emu.activities.EmulationActivity.launch(this, game);
+                return;
             }
+
+            Uri gameUri = selectedUri;
+            play.setEnabled(false);
+            selectedGame.setText("Copiando arquivo NSP...");
+
+            new Thread(() -> {
+                java.io.File copiedFile = null;
+
+                try {
+                    java.io.File appDir = getExternalFilesDir(null);
+                    if (appDir == null) {
+                        appDir = getFilesDir();
+                    }
+
+                    if (!appDir.exists() && !appDir.mkdirs()) {
+                        throw new java.io.IOException("Não foi possível criar a pasta do jogo.");
+                    }
+
+                    copiedFile = org.sumi.sumi_emu.utils.FileUtil.INSTANCE
+                        .copyUriToInternalStorage(
+                            gameUri,
+                            appDir.getAbsolutePath() + java.io.File.separator,
+                            "Cuphead.nsp"
+                        );
+                } catch (Exception e) {
+                    android.util.Log.e("CUPHEAD", "Erro ao copiar NSP", e);
+                }
+
+                final java.io.File result = copiedFile;
+
+                runOnUiThread(() -> {
+                    play.setEnabled(true);
+
+                    if (result == null || !result.exists() || result.length() == 0) {
+                        selectedGame.setText("Falha ao importar o NSP.");
+                        Toast.makeText(this, "Não foi possível copiar o arquivo NSP.", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
+                    selectedGame.setText("Cuphead pronto para iniciar.");
+
+                    org.sumi.sumi_emu.model.Game game =
+                        new org.sumi.sumi_emu.model.Game(
+                            "Cuphead",
+                            result.getAbsolutePath(),
+                            "0",
+                            "",
+                            "",
+                            false
+                        );
+
+                    org.sumi.sumi_emu.activities.EmulationActivity.launch(this, game);
+                });
+            }, "Cuphead-NSP-Copy").start();
         });
 
         selectedGame = text("Nenhum jogo selecionado", 12, Color.LTGRAY, false);
